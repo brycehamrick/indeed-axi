@@ -11,6 +11,7 @@ import { messagesCommand, MESSAGES_HELP } from "./commands/messages.js";
 import { stageCommand, STAGE_HELP } from "./commands/stage.js";
 import { digestCommand, DIGEST_HELP } from "./commands/digest.js";
 import { scoreCommand, SCORE_HELP } from "./commands/score.js";
+import { skillCommand, SKILL_HELP } from "./commands/skill.js";
 import { setupCommand, SETUP_HELP } from "./commands/setup.js";
 import { discoverCommand, DISCOVER_HELP } from "./commands/discover.js";
 
@@ -33,6 +34,7 @@ commands:
   stage move <id> --to   move a pipeline stage (--confirm gated)
   digest                 ranked hiring review over the local store (offline)
   score record <id>      record a screening score (--note --confirm syncs to Indeed)
+  skill install          install the agent skill (npx-able, idempotent)
   auth login             open a visible Chrome window, wait for manual login
   auth status            browser session state (--browser to probe live)
   auth logout            close the browser, clear the record (--purge deletes the profile)
@@ -62,6 +64,7 @@ const COMMAND_HELP: Record<string, HelpEntry> = {
   stage: { help: STAGE_HELP },
   digest: { help: DIGEST_HELP },
   score: { help: SCORE_HELP },
+  skill: { help: SKILL_HELP },
   setup: { help: SETUP_HELP },
   discover: { help: DISCOVER_HELP },
 };
@@ -89,6 +92,7 @@ export async function main(): Promise<void> {
       stage: withContext(stageCommand),
       digest: withContext(digestCommand),
       score: withContext(scoreCommand),
+      skill: (args: string[]) => skillCommand(args),
       discover: withContext(discoverCommand),
       setup: (args: string[]) => setupCommand(args),
     },

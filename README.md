@@ -17,7 +17,9 @@ messages, pipeline moves) later.
 ```sh
 npm install -g indeed-axi
 # or run on demand, identical:
-npx -y indeed-axi@latest browser open
+npx -y indeed-axi@latest jobs list
+# install the agent skill for coding agents (Claude Code, Codex, OpenCode, ...):
+npx -y indeed-axi skill install
 ```
 
 Requires Node 20+ and a Chrome/Chromium (`INDEED_BROWSER_BIN` can point to a
@@ -207,21 +209,15 @@ Full requirements live in `REQUIREMENTS.md`.
 
 ## Set up on another machine
 
-The CLI is a standard global npm install from GitHub; the only per-machine
-state is the browser profile and the local store.
-
 ```sh
-npm install -g git+ssh://git@github.com/brycehamrick/indeed-axi.git
-# or from a clone: git clone git@github.com:brycehamrick/indeed-axi.git && npm link
-
-indeed-axi --version          # should print the current version
-indeed-axi auth login         # visible Chrome; log in manually (2FA included)
+npm install -g indeed-axi
+npx -y indeed-axi skill install      # writes the agent skill to ~/.agents/skills/
+indeed-axi auth login                # visible Chrome; log in manually (2FA included)
 ```
 
-2. Install the agent skill for your agent's skills directory:
-   `skills/indeed-axi/SKILL.md` (e.g. copy to `~/.agents/skills/indeed-axi/`).
-3. Optional env: `INDEED_STATE_DIR` (default `~/.indeed-axi`) and
-   `INDEED_BROWSER_BIN` (auto-detects Chrome otherwise).
+The skill installer is idempotent (`--force` overwrites a changed version,
+`--dir <path>` targets another skills directory). Optional env:
+`INDEED_STATE_DIR` (default `~/.indeed-axi`) and `INDEED_BROWSER_BIN`.
 
 Candidate packets live under `~/.indeed-axi/store/` per machine and are
 never synced - sync them live with `candidates sync` instead. Indeed

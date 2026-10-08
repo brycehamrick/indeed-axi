@@ -257,7 +257,8 @@ describe("digest command", () => {
 
   it("renders offline from the store with aging flags", async () => {
     const stateDir = mkdtempSync(join(tmpdir(), "indeed-axi-digestcmd-test-"));
-    const now = new Date("2026-09-30T12:00:00Z");
+    // Relative to the real clock: the digest command ages against Date.now().
+    const sevenDaysAgo = new Date(Date.now() - 7 * 86_400_000).toISOString();
     writePacket(
       stateDir,
       packet("top", "Ada", {
@@ -269,7 +270,7 @@ describe("digest command", () => {
       stateDir,
       packet("chase", "Cara", {
         jobTitle: "Executive Assistant",
-        thread: thread("chase", "employer", new Date(now.getTime() - 7 * 86_400_000).toISOString()),
+        thread: thread("chase", "employer", sevenDaysAgo),
       }),
     );
     const result = (await digestCommand(["--job", "executive"], makeCtx(stateDir))) as Record<string, unknown>;
