@@ -1,6 +1,6 @@
 {
   "name": "indeed-axi",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "AXI-compliant CLI for Indeed - a persistent authenticated browser session and agent-ergonomic primitives for driving the Indeed employer interface with Playwright.",
   "type": "module",
   "license": "MIT",
